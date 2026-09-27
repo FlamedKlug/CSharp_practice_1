@@ -1,0 +1,250 @@
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+a, .btn-link {
+    color: #006bb7;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    /* Общий фон и базовая типографика оставляют форму читаемой на большом и узком экране. */
+    :root {
+        color-scheme: light;
+        font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+        color: #202b24;
+        background: #f1f3ed;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    html,
+    body {
+        min-width: 320px;
+        min-height: 100%;
+        margin: 0;
+    }
+
+    body {
+        background-color: #f1f3ed;
+        background-image: linear-gradient(rgba(45, 67, 52, 0.035) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(45, 67, 52, 0.035) 1px, transparent 1px);
+        background-size: 32px 32px;
+    }
+
+    button,
+    input {
+        font: inherit;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    a:focus-visible {
+        outline: 3px solid #e56d48;
+        outline-offset: 3px;
+    }
+
+    /* Текстовая часть формы использует спокойные зеленые оттенки и яркий коралловый акцент действия. */
+    .leap-page {
+        display: flex;
+        width: min(100% - 64px, 1180px);
+        min-height: 100vh;
+        margin: 0 auto;
+        flex-direction: column;
+    }
+
+    .page-header,
+    .page-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .page-header {
+        min-height: 86px;
+        border-bottom: 1px solid #cbd2c8;
+    }
+
+    .wordmark {
+        color: #28392d;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-decoration: none;
+    }
+
+    .wordmark span {
+        padding: 0 7px;
+        color: #e56d48;
+    }
+
+    .header-note,
+    .eyebrow,
+    .page-footer,
+    .input-hint {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+    }
+
+    .header-note {
+        color: #667267;
+    }
+
+    .checker {
+        display: grid;
+        width: min(100%, 920px);
+        margin: auto;
+        padding: 90px 0 100px;
+        grid-template-columns: 1fr 0.9fr;
+        align-items: center;
+        gap: 80px;
+    }
+
+    .eyebrow {
+        margin: 0 0 22px;
+        color: #647963;
+    }
+
+    .intro h1 {
+        margin: 0;
+        color: #263a2c;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(42px, 5vw, 66px);
+        font-weight: 400;
+        line-height: 1.04;
+    }
+
+    .description {
+        max-width: 360px;
+        margin: 24px 0 0;
+        color: #5f6a61;
+        font-size: 16px;
+        line-height: 1.65;
+    }
+
+    .year-form {
+        padding-top: 30px;
+    }
+
+    .year-form label {
+        display: block;
+        margin-bottom: 10px;
+        color: #263a2c;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .form-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .form-controls input {
+        width: 100%;
+        min-height: 60px;
+        padding: 0 18px;
+        border: 1px solid #aeb9ac;
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.74);
+        color: #263a2c;
+        font-size: 18px;
+    }
+
+    .form-controls input::placeholder {
+        color: #8c978b;
+    }
+
+    .form-controls button {
+        min-height: 58px;
+        padding: 0 20px;
+        border: 0;
+        border-radius: 3px;
+        background: #e56d48;
+        color: #fff;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 700;
+        transition: background-color 140ms ease, transform 140ms ease;
+    }
+
+    .form-controls button:hover:not(:disabled) {
+        transform: translateY(-1px);
+        background: #cc5735;
+    }
+
+    .form-controls button:disabled {
+        cursor: wait;
+        opacity: 0.72;
+    }
+
+    .input-hint {
+        display: block;
+        margin-top: 12px;
+        color: #758075;
+        font-size: 10px;
+        letter-spacing: 0.03em;
+        font-weight: 500;
+    }
+
+    .result {
+        margin: 24px 0 0;
+        padding-top: 16px;
+        border-top: 1px solid #cbd2c8;
+        color: #285b3a;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 24px;
+    }
+
+    .result-error {
+        color: #a63f2e;
+        font-family: inherit;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .page-footer {
+        min-height: 66px;
+        border-top: 1px solid #cbd2c8;
+        color: #738073;
+        font-size: 10px;
+    }
+
+    @media (max-width: 700px) {
+        .leap-page {
+            width: min(100% - 40px, 520px);
+        }
+
+        .page-header {
+            min-height: 72px;
+        }
+
+        .checker {
+            padding: 64px 0;
+            grid-template-columns: 1fr;
+            gap: 32px;
+        }
+
+        .year-form {
+            padding-top: 0;
+        }
+    }
+
+    @media (max-width: 420px) {
+        .leap-page {
+            width: calc(100% - 32px);
+        }
+
+        .page-footer {
+            align-items: flex-start;
+            flex-direction: column;
+            justify-content: center;
+            gap: 8px;
+        }
+    }

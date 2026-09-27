@@ -1,0 +1,109 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@using System.Text.Json
+@inject IJSRuntime JS
+
+<PageTitle>Проверка високосного года</PageTitle>
+
+<main class="leap-page">
+	<header class="page-header">
+		<a class="wordmark" href="/" aria-label="На главную">КАЛЕНДАРЬ <span>·</span> 01</a>
+		<span class="header-note">ПРОВЕРКА ГОДА</span>
+	</header>
+
+	<section class="checker" aria-labelledby="page-title">
+		<div class="intro">
+			<p class="eyebrow">ГРИГОРИАНСКИЙ КАЛЕНДАРЬ</p>
+			<h1 id="page-title">Високосный<br />или обычный?</h1>
+			<p class="description">Укажите год, чтобы проверить, будет ли в феврале дополнительный день.</p>
+		</div>
+
+		<form class="year-form" @onsubmit="CheckLeapYearAsync" @onsubmit:preventDefault>
+			<label for="year-input">Год</label>
+			<div class="form-controls">
+				<input id="year-input"
+					   type="text"
+					   inputmode="numeric"
+					   pattern="[0-9]*"
+					   autocomplete="off"
+					   placeholder="Например, 2024"
+					   value="@year"
+					   @oninput="HandleYearInput"
+					   aria-describedby="year-help" />
+				<button type="submit" disabled="@isLoading">
+					@(isLoading ? "Проверяем…" : "Проверить високосность")
+				</button>
+			</div>
+			<span id="year-help" class="input-hint">Допустимы только цифры от 0 до 9</span>
+
+			@if (!string.IsNullOrEmpty(message))
+			{
+				<p class="result" role="status" aria-live="polite">@message</p>
+			}
+			@if (!string.IsNullOrEmpty(errorMessage))
+			{
+				<p class="result result-error" role="alert">@errorMessage</p>
+			}
+		</form>
+	</section>
+
+	<footer class="page-footer">
+		<span>ОБЫЧНЫЙ ГОД — 365 ДНЕЙ</span>
+		<span>ВИСОКОСНЫЙ ГОД — 366 ДНЕЙ</span>
+	</footer>
+</main>
+
+@code {
+	private string year = string.Empty;
+	private string? message;
+	private string? errorMessage;
+	private bool isLoading;
+
+	/// <summary>
+	/// Оставляет в поле только цифры, в том числе при вставке текста из буфера обмена.
+	/// </summary>
+	private void HandleYearInput(ChangeEventArgs args)
+	{
+		var enteredText = args.Value?.ToString() ?? string.Empty;
+		year = new string(enteredText.Where(char.IsAsciiDigit).ToArray());
+		message = null;
+		errorMessage = null;
+	}
+
+	/// <summary>
+	/// Отправляет введенный год браузерному клиенту REST API и сопоставляет JSON с текстом результата.
+	/// </summary>
+	private async Task CheckLeapYearAsync()
+	{
+		isLoading = true;
+		message = null;
+		errorMessage = null;
+
+		try
+		{
+			// JavaScript выполняет запрос из браузера, поэтому заголовок Year отправляется напрямую в API.
+			var response = await JS.InvokeAsync<JsonElement>("leapYearApi.check", year);
+
+			if (!response.TryGetProperty("leap", out var leapValue))
+			{
+				message = "Задайте год для проверки";
+			}
+			else if (leapValue.ValueKind == JsonValueKind.True)
+			{
+				message = "Год високосный";
+			}
+			else
+			{
+				message = "Год невисокосный";
+			}
+		}
+		catch (JSException)
+		{
+			errorMessage = "Не удалось выполнить запрос. Проверьте подключение и повторите попытку.";
+		}
+		finally
+		{
+			isLoading = false;
+		}
+	}
+}

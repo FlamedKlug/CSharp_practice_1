@@ -1,0 +1,30 @@
+# Каталоги, создаваемые сборкой .NET.
+[Bb]in/
+[Oo]bj/
+[Aa]rtifacts/
+
+# Файлы и кэш Visual Studio.
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.rsuser
+
+# Настройки и кэш других IDE.
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+*.swp
+*.swo
+
+# Локальные секреты и пользовательские настройки .NET.
+secrets.json
+appsettings.Local.json
+
+# Системные файлы.
+.DS_Store
+Thumbs.db
+desktop.ini
